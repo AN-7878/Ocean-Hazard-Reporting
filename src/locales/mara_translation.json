@@ -1,0 +1,23 @@
+{
+  "dashboard": "डॅशबोर्ड",
+  "reportHazard": "समुद्री आपत्ती नोंदवा",
+  "shelters": "आपत्कालीन निवारे",
+  "alerts": "सक्रिय इशारे",
+  "profile": "वापरकर्ता प्रोफाइल",
+  "sos": "आपत्कालीन SOS",
+  "verifiedReports": "प्रमाणित अहवाल",
+  "activeShelters": "सक्रिय निवारे",
+  "totalReports": "आजचे एकूण अहवाल",
+  "submitReport": "आपत्कालीन अहवाल सबमिट करा",
+  "description": "स्थितीचे वर्णन करा...",
+  "location": "ठिकाण/पत्ता",
+  "autoDetect": "स्वयंचलित शोधा",
+  "comments": "प्रतिक्रिया",
+  "post": "पोस्ट करा",
+  "emergencyShelters": "आपत्कालीन निवारे",
+  "findNearby": "जवळचे निवारे शोधा",
+  "userProfile": "वापरकर्ता प्रोफाइल",
+  "verifiedAccount": "प्रमाणित खाते",
+  "call": "कॉल करा",
+  "navigate": "मार्गदर्शन करा"
+}

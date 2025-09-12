@@ -1,0 +1,23 @@
+{
+  "dashboard": "Dashboard",
+  "reportHazard": "Report Ocean Hazard",
+  "shelters": "Emergency Shelters",
+  "alerts": "Active Alerts",
+  "profile": "User Profile",
+  "sos": "SOS Alert",
+  "verifiedReports": "Verified Reports",
+  "activeShelters": "Active Shelters",
+  "totalReports": "Total Reports Today",
+  "submitReport": "Submit Emergency Report",
+  "description": "Describe the situation...",
+  "location": "Location/Address",
+  "autoDetect": "Auto-detect",
+  "comments": "Comments",
+  "post": "Post",
+  "emergencyShelters": "Emergency Shelters",
+  "findNearby": "Find Nearby Shelters",
+  "userProfile": "User Profile",
+  "verifiedAccount": "Verified Account",
+  "call": "Call",
+  "navigate": "Navigate"
+}

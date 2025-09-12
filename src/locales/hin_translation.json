@@ -1,0 +1,23 @@
+{
+  "dashboard": "डैशबोर्ड",
+  "reportHazard": "समुद्री आपदा रिपोर्ट करें",
+  "shelters": "आपातकालीन आश्रय",
+  "alerts": "सक्रिय चेतावनियाँ",
+  "profile": "उपयोगकर्ता प्रोफ़ाइल",
+  "sos": "आपातकालीन SOS",
+  "verifiedReports": "प्रमाणित रिपोर्टें",
+  "activeShelters": "सक्रिय आश्रय",
+  "totalReports": "आज की कुल रिपोर्टें",
+  "submitReport": "आपातकालीन रिपोर्ट सबमिट करें",
+  "description": "स्थिति का वर्णन करें...",
+  "location": "स्थान/पता",
+  "autoDetect": "स्वचालित पहचानें",
+  "comments": "टिप्पणियाँ",
+  "post": "पोस्ट करें",
+  "emergencyShelters": "आपातकालीन आश्रय",
+  "findNearby": "नज़दीकी आश्रय खोजें",
+  "userProfile": "उपयोगकर्ता प्रोफ़ाइल",
+  "verifiedAccount": "प्रमाणित खाता",
+  "call": "कॉल करें",
+  "navigate": "मार्गदर्शन करें"
+}
