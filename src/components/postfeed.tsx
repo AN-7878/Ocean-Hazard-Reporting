@@ -32,6 +32,170 @@ const PostsFeed: React.FC<Props> = ({ reports }) => {
     severity: "all",
   });
   const [newComment, setNewComment] = useState<{ [key: number]: string }>({});
+  const [communityReports, setCommunityReports] = useState([
+    {
+      id: 1,
+      type: 'Cyclone',
+      location: 'Chennai, Tamil Nadu',
+      time: '2 hours ago',
+      description: 'Strong winds and heavy rainfall observed',
+      verified: true,
+      upvotes: 45,
+      downvotes: 2,
+      official: true,
+      status: 'verified',
+      comments: [
+        { user: 'Amit', text: 'Stay safe everyone!' },
+        { user: 'Priya', text: 'Evacuation started in my area.' }
+      ],
+      severity: 'High'
+    },
+    {
+      id: 2,
+      type: 'Storm Surge',
+      location: 'Mumbai, Maharashtra',
+      time: '4 hours ago',
+      description: 'Water levels rising rapidly near coastal areas',
+      verified: false,
+      upvotes: 23,
+      downvotes: 1,
+      official: false,
+      status: 'pending',
+      comments: [
+        { user: 'Rohit', text: 'Local authorities have been informed.' }
+      ],
+      severity: 'Moderate'
+    },
+    {
+      id: 3,
+      type: 'High Waves',
+      location: 'Kochi, Kerala',
+      time: '6 hours ago',
+      description: 'Unusual wave patterns detected',
+      verified: true,
+      upvotes: 12,
+      downvotes: 0,
+      official: false,
+      status: 'verified',
+      comments: [
+        { user: 'Meera', text: 'Beach access restricted.' }
+      ],
+      severity: 'Low'
+    },
+    {
+      id: 4,
+      type: 'Coastal Flooding',
+      location: 'Visakhapatnam, Andhra Pradesh',
+      time: '8 hours ago',
+      description: 'Flooding reported in low-lying coastal areas',
+      verified: false,
+      upvotes: 18,
+      downvotes: 3,
+      official: false,
+      status: 'unverified',
+      comments: [
+        { user: 'Suresh', text: 'Water entering homes.' }
+      ],
+      severity: 'High'
+    },
+    {
+      id: 5,
+      type: 'Tsunami Warning',
+      location: 'Promenade Beach, Puducherry',
+      time: '1 hour ago',
+      description: 'Seismic activity detected, potential tsunami risk',
+      verified: true,
+      upvotes: 67,
+      downvotes: 0,
+      official: true,
+      status: 'verified',
+      comments: [
+        { user: 'Arjun', text: 'Evacuating immediately.' }
+      ],
+      severity: 'Critical'
+    },
+    // Additional reports
+    {
+      id: 6,
+      type: 'Heavy Rainfall',
+      location: 'Goa',
+      time: '30 minutes ago',
+      description: 'Continuous heavy rain causing traffic disruptions',
+      verified: false,
+      upvotes: 10,
+      downvotes: 1,
+      official: false,
+      status: 'pending',
+      comments: [
+        { user: 'Anjali', text: 'Roads are flooded.' }
+      ],
+      severity: 'Moderate'
+    },
+    {
+      id: 7,
+      type: 'Flood Alert',
+      location: 'Digha, West Bengal',
+      time: '3 hours ago',
+      description: 'River overflow warning issued',
+      verified: true,
+      upvotes: 25,
+      downvotes: 2,
+      official: true,
+      status: 'verified',
+      comments: [
+        { user: 'Ravi', text: 'People moving to shelters.' }
+      ],
+      severity: 'High'
+    },
+    {
+      id: 8,
+      type: 'Landslide',
+      location: 'Kanyakumari, Tamil Nadu',
+      time: '5 hours ago',
+      description: 'Minor landslide reported near coastal road',
+      verified: false,
+      upvotes: 8,
+      downvotes: 0,
+      official: false,
+      status: 'unverified',
+      comments: [
+        { user: 'Kavita', text: 'Avoid the area.' }
+      ],
+      severity: 'Low'
+    },
+    {
+      id: 9,
+      type: 'Evacuation Notice',
+      location: 'Alappuzha, Kerala',
+      time: '15 minutes ago',
+      description: 'Mandatory evacuation for residents near Alleppey Beach',
+      verified: true,
+      upvotes: 40,
+      downvotes: 1,
+      official: true,
+      status: 'verified',
+      comments: [
+        { user: 'Sunita', text: 'Authorities helping with transport.' }
+      ],
+      severity: 'Critical'
+    },
+    {
+      id: 10,
+      type: 'Medical Emergency',
+      location: 'Mangalore, Karnataka',
+      time: '1 hour ago',
+      description: 'Medical teams requested at Panambur Beach shelter',
+      verified: false,
+      upvotes: 15,
+      downvotes: 0,
+      official: false,
+      status: 'pending',
+      comments: [
+        { user: 'Manoj', text: 'Injured people being treated.' }
+      ],
+      severity: 'Moderate'
+    }
+  ]);
 
   // Filter logic
   const filteredReports = reports.filter((report) => {
