@@ -198,7 +198,7 @@ const PostsFeed: React.FC<Props> = ({ reports }) => {
   ]);
 
   // Filter logic
-  const filteredReports = reports.filter((report) => {
+  const filteredReports = communityReports.filter((report) => {
     // Search filter
     const matchesSearch =
       report.description.toLowerCase().includes(searchTerm.toLowerCase()) ||

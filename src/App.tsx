@@ -11,6 +11,33 @@ import ReportForm from "./components/reportform";
 import ShelterFinder from "./components/shelter";
 import Profile from "./components/profile";
 
+const verifiedOfficials = [
+  {
+    id: 1,
+    name: "John Doe",
+    designation: "Police Inspector",
+    department: "Police Department",
+    contact: "123-456-7890",
+    region: "Downtown",
+  },
+  {
+    id: 2,
+    name: "Jane Smith",
+    designation: "Fire Chief",
+    department: "Fire Department",
+    contact: "987-654-3210",
+    region: "Uptown",
+  },
+  {
+    id: 3,
+    name: "Dr. Emily Brown",
+    designation: "Medical Officer",
+    department: "Health Department",
+    contact: "555-123-4567",
+    region: "Midtown",
+  },
+];
+
 function App() {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -35,6 +62,10 @@ function App() {
 
   const officialUpdates = [
     { id: 1, title: "Cyclone Alert", content: "Cyclone expected near Chennai.", timestamp: "1h ago", priority: "critical", author: "Dr. Rajesh Kumar" },
+    { id: 2, title: "Flood Warning", content: "Heavy rainfall may cause flooding in low-lying areas.", timestamp: "30m ago", priority: "high", author: "IMD Official" },
+    { id: 3, title: "Shelter Opened", content: "New relief shelter opened at Marina Beach.", timestamp: "10m ago", priority: "medium", author: "Chennai Corporation" },
+    { id: 4, title: "Power Outage", content: "Scheduled power outage in coastal areas for safety.", timestamp: "5m ago", priority: "high", author: "TNEB" },
+    { id: 5, title: "Medical Camp", content: "Free medical camp at Community Hall, Besant Nagar.", timestamp: "just now", priority: "medium", author: "Health Dept" },
   ];
 
   const reports = [
@@ -55,9 +86,6 @@ function App() {
   ];
 
   const currentUser = { name: "John Doe", avatar: "https://i.pravatar.cc/100" };
-  const verifiedOfficials = [
-    { id: 1, name: "Dr. Rajesh Kumar", designation: "Meteorologist", department: "IMD", contact: "+91-11-24631913", region: "National" },
-  ];
 
   const [reportForm, setReportForm] = useState({ description: "", address: "", location: null, type: "", severity: "", tags: [] });
 
