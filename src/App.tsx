@@ -18,7 +18,6 @@ function App() {
   const [userRole, setUserRole] = useState<"citizen" | "official" | "analyst">("citizen");
   const [editingDashboard, setEditingDashboard] = useState(false);
 
-  // Example state (replace with real API data later)
   const todayStats = { totalReports: 127, verifiedReports: 89, activeAlerts: 12, sheltersActive: 45 };
 
   const [shelters, setShelters] = useState([
@@ -74,16 +73,10 @@ function App() {
     }
   };
 
-  // Dark mode
   useEffect(() => {
-    if (darkMode) {
-      document.body.classList.add("bg-gray-900", "text-white");
-    } else {
-      document.body.classList.remove("bg-gray-900", "text-white");
-    }
+    document.documentElement.classList.toggle("dark", darkMode);
   }, [darkMode]);
 
-  // Mobile menu navigation
   const navTabs = [
     { key: "dashboard", label: "Dashboard" },
     { key: "report", label: "Report" },
@@ -94,69 +87,64 @@ function App() {
   ];
 
   return (
-    <div className={`${darkMode ? "bg-gray-900 text-white" : "bg-white text-gray-900"} min-h-screen`}>
-      {/* Language switcher */}
-      <div className="fixed top-4 left-4 z-50">
-        <select
-          onChange={(e) => i18n.changeLanguage(e.target.value)}
-          className="px-3 py-2 rounded border border-blue-300 bg-white text-blue-700 font-medium"
-        >
-          <option value="en">English</option>
-          <option value="hi">हिन्दी</option>
-          <option value="mr">मराठी</option>
-        </select>
-      </div>
-
-      {/* Dark mode toggle */}
-      <div className="fixed top-20 left-6 z-50">
-        <button
-          onClick={() => setDarkMode(!darkMode)}
-          className={`w-12 h-12 flex items-center justify-center rounded-full shadow border-2
-            ${darkMode ? "bg-gray-800 border-yellow-300 text-yellow-300" : "bg-white border-blue-700 text-blue-700"}`}
-        >
-          {darkMode ? <Sun className="w-6 h-6" /> : <Moon className="w-6 h-6" />}
-        </button>
-      </div>
-
-      {/* Role switcher */}
-      <div className="fixed top-4 right-4 z-50">
-        <select
-          value={userRole}
-          onChange={(e) => setUserRole(e.target.value as "citizen" | "official" | "analyst")}
-          className="px-3 py-2 rounded border border-blue-300 bg-white text-blue-700 font-medium"
-        >
-          <option value="citizen">Citizen</option>
-          <option value="official">Official</option>
-          <option value="analyst">Analyst</option>
-        </select>
-      </div>
-
+    <div className="bg-gray-50 dark:bg-gray-900 min-h-screen p-6">
+      
       {/* Navbar */}
-      <nav className="bg-white shadow-lg border-b-4 border-blue-600 sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto flex justify-between h-16 px-4">
-          <div className="flex items-center">
-            <Shield className="h-8 w-8 text-blue-600 mr-2" />
-            <span className="font-bold text-xl">OceanGuard</span>
-          </div>
-          <div className="hidden md:flex items-center space-x-6">
-            {navTabs.map(tab => (
-              <button key={tab.key} onClick={() => setActiveTab(tab.key)}>{tab.label}</button>
-            ))}
-          </div>
-          <div className="md:hidden flex items-center">
-            <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>{mobileMenuOpen ? <X /> : <Menu />}</button>
-          </div>
+      <nav className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4 flex justify-between items-center mb-8">
+        <div className="flex items-center space-x-2">
+          <Shield className="text-primary w-8 h-8" />
+          <span className="font-bold text-xl text-primary">SamudraSetu</span>
         </div>
-        {/* Mobile menu */}
+
+        <div className="hidden md:flex space-x-8">
+          {navTabs.map((tab) => (
+            <button
+              key={tab.key}
+              onClick={() => setActiveTab(tab.key)}
+              className={`font-medium hover:text-primary ${
+                activeTab === tab.key ? "text-primary underline" : "text-gray-600 dark:text-gray-300"
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        <div className="flex items-center space-x-4">
+          <button
+            onClick={() => setDarkMode(!darkMode)}
+            className="p-2 rounded bg-gray-200 dark:bg-gray-700"
+          >
+            {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+          </button>
+
+          <select
+            value={userRole}
+            onChange={(e) => setUserRole(e.target.value as "citizen" | "official" | "analyst")}
+            className="rounded border px-2 py-1 bg-white dark:bg-gray-700"
+          >
+            <option value="citizen">Citizen</option>
+            <option value="official">Official</option>
+            <option value="analyst">Analyst</option>
+          </select>
+
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden p-2"
+          >
+            {mobileMenuOpen ? <X /> : <Menu />}
+          </button>
+        </div>
+
         <AnimatePresence>
           {mobileMenuOpen && (
             <motion.div
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
-              className="md:hidden bg-white border-t border-blue-600 px-4 py-2"
+              className="md:hidden bg-white dark:bg-gray-800 mt-4 rounded shadow-lg p-4"
             >
-              {navTabs.map(tab => (
+              {navTabs.map((tab) => (
                 <button
                   key={tab.key}
                   className="block w-full text-left py-2"
@@ -174,49 +162,46 @@ function App() {
       </nav>
 
       {/* Main Content */}
-      <main className="pt-20">
-        <AnimatePresence mode="wait">
-          {activeTab === "dashboard" && (
-            <motion.div key="dashboard" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-              <Dashboard
-                todayStats={todayStats}
-                setActiveTab={setActiveTab}
-                shelters={shelters}
-                editable={userRole === "official"}
-                setEditingDashboard={setEditingDashboard}
-                userRole={userRole}
-              />
-            </motion.div>
-          )}
-          {activeTab === "report" && (
-            <motion.div key="report" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-              <ReportForm reportForm={reportForm} setReportForm={setReportForm} getCurrentLocation={getCurrentLocation} />
-            </motion.div>
-          )}
-          {activeTab === "posts" && (
-            <motion.div key="posts" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-              <PostsFeed reports={reports} />
-            </motion.div>
-          )}
-          {activeTab === "alerts" && (
-            <motion.div key="alerts" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-              <Alerts officialUpdates={officialUpdates} />
-            </motion.div>
-          )}
-          {activeTab === "shelters" && (
-            <motion.div key="shelters" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-              <ShelterFinder shelters={shelters} userRole={userRole} />
-            </motion.div>
-          )}
-          {activeTab === "profile" && (
-            <motion.div key="profile" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-              <Profile currentUser={currentUser} verifiedOfficials={verifiedOfficials} userRole={userRole} Chatbot={Chatbot} />
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </main>
+      <AnimatePresence mode="wait">
+        {activeTab === "dashboard" && (
+          <motion.div key="dashboard" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+            <Dashboard
+              todayStats={todayStats}
+              setActiveTab={setActiveTab}
+              shelters={shelters}
+              editable={userRole === "official"}
+              setEditingDashboard={setEditingDashboard}
+              userRole={userRole}
+            />
+          </motion.div>
+        )}
+        {activeTab === "report" && (
+          <motion.div key="report" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+            <ReportForm reportForm={reportForm} setReportForm={setReportForm} getCurrentLocation={getCurrentLocation} />
+          </motion.div>
+        )}
+        {activeTab === "posts" && (
+          <motion.div key="posts" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+            <PostsFeed reports={reports} />
+          </motion.div>
+        )}
+        {activeTab === "alerts" && (
+          <motion.div key="alerts" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+            <Alerts officialUpdates={officialUpdates} />
+          </motion.div>
+        )}
+        {activeTab === "shelters" && (
+          <motion.div key="shelters" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+            <ShelterFinder shelters={shelters} userRole={userRole} />
+          </motion.div>
+        )}
+        {activeTab === "profile" && (
+          <motion.div key="profile" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+            <Profile currentUser={currentUser} verifiedOfficials={verifiedOfficials} userRole={userRole} Chatbot={Chatbot} />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-      {/* Chatbot only for citizens */}
       {userRole === "citizen" && <Chatbot />}
     </div>
   );

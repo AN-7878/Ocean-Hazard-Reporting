@@ -1,15 +1,14 @@
-/** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  darkMode: 'class', // Use class-based dark mode
+  content: ['./src/**/*.{js,ts,jsx,tsx}'], // Scan your source files
   theme: {
     extend: {
       colors: {
-        primary: '#475569',   // slate-600
-        secondary: '#1e40af', // blue-800
-        neutral: '#f9fafb',   // gray-50
-        alert: '#dc2626',     // red-600
-      }
-    }
+        primary: '#1D4ED8',   // Vibrant Blue
+        secondary: '#10B981', // Vibrant Green
+        accent: '#EF4444',    // Vibrant Red
+      },
+    },
   },
   plugins: [],
 };
