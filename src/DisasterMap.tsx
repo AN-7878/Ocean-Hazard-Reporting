@@ -79,6 +79,26 @@ const DisasterMap: React.FC<Props> = ({ shelters }) => {
           },
         });
 
+        // Hover popup for hazards
+        const hazardPopup = new mapboxgl.Popup({ closeButton: false, closeOnClick: false });
+        map.on('mousemove', 'ocean-hazard-layer', (e) => {
+          const feature = e.features && e.features[0];
+          if (!feature) return;
+          const props = feature.properties as any;
+          const html = `
+            <div style="font-size:12px;">
+              <strong>${props.name || 'Location'}</strong><br/>
+              Zone: ${props.zone || '-'}<br/>
+              Buildings: ${props.buildings || '-'}<br/>
+              Population: ${props.population || '-'}
+            </div>
+          `;
+          hazardPopup.setLngLat((e as any).lngLat).setHTML(html).addTo(map);
+        });
+        map.on('mouseleave', 'ocean-hazard-layer', () => {
+          hazardPopup.remove();
+        });
+
         // Add shelters only on hazard map
         shelters.forEach((shelter) => {
           const el = document.createElement('div');
@@ -148,7 +168,7 @@ const DisasterMap: React.FC<Props> = ({ shelters }) => {
         <select
           value={selectedMap}
           onChange={(e) => setSelectedMap(e.target.value as 'hazard' | 'reports')}
-          className="px-3 py-2 border rounded-md"
+          className="px-3 py-2 border rounded-md dark:bg-gray-800 dark:text-white dark:border-gray-600"
         >
           <option value="hazard">Ocean Hazard Map</option>
           <option value="reports">Reports Map</option>

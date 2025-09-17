@@ -3,7 +3,7 @@ import {
   MapPin, 
   AlertTriangle, 
   Users, 
-  Shield, 
+  
   User, 
   Menu, 
   X, 
@@ -33,6 +33,7 @@ import {
   Moon,
   Sun
 } from 'lucide-react';
+import WaveIcon from './components/icons/WaveIcon';
 import Chatbot from './Chatbot';
 import DisasterMap from './DisasterMap';
 
@@ -439,8 +440,8 @@ function App() {
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <Shield className="h-8 w-8 text-blue-600 mr-2" />
-            <span className="font-bold text-xl text-gray-900">OceanGuard</span>
+            <WaveIcon className="h-8 w-8 text-blue-600 mr-2" />
+            <span className="font-bold text-xl text-gray-900">SAMUDRASETU</span>
           </div>
           
           {/* Desktop Navigation */}

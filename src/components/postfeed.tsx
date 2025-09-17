@@ -21,7 +21,7 @@ type Props = {
   reports: CommunityReport[];
 };
 
-const tabContainerClass = "space-y-6 max-w-2xl mx-auto py-8";
+const tabContainerClass = "space-y-6 w-full py-8";
 
 // Fix: Accept props and use state for search/filter/comments
 const PostsFeed: React.FC<Props> = ({ reports }) => {
@@ -231,170 +231,175 @@ const PostsFeed: React.FC<Props> = ({ reports }) => {
   };
 
   return (
-    <div className={tabContainerClass} style={{ backgroundColor: 'white' }}>
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Posts</h2>
-        
-        {/* Search and Filter */}
-        <div className="space-y-4 mb-6">
-          <div className="flex space-x-4">
-            <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-              <input
-                type="text"
-                placeholder="Search reports..."
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#5899E2]"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
+    <div className={tabContainerClass}>
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        {/* Sidebar Filters */}
+        <aside className="lg:col-span-3">
+          <div className="sticky top-24 space-y-4">
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
+              <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-3">Search</h3>
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                <input
+                  type="text"
+                  placeholder="Search reports..."
+                  className="w-full pl-10 pr-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-[#5899E2] dark:bg-gray-700 dark:text-white"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </div>
             </div>
-            <div className="relative">
-              <button
-                className="bg-[#5899E2] text-white px-4 py-2 rounded-md hover:bg-[#4177b7] transition-colors flex items-center"
-                onClick={() => setFilterDropdownOpen(!filterDropdownOpen)}
-                type="button"
+
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
+              <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-3">Status</h3>
+              <div className="grid grid-cols-2 gap-2">
+                {[
+                  { key: 'all', label: 'All' },
+                  { key: 'verified', label: 'Verified' },
+                  { key: 'pending', label: 'Pending' },
+                  { key: 'unverified', label: 'Unverified' },
+                ].map(opt => (
+                  <button
+                    key={opt.key}
+                    onClick={() => setSelectedFilters({ ...selectedFilters, verification: opt.key })}
+                    className={`px-3 py-2 rounded text-sm border transition-colors ${
+                      selectedFilters.verification === opt.key
+                        ? 'bg-blue-600 text-white border-blue-600'
+                        : 'border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:border-blue-500'
+                    }`}
+                    type="button"
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
+              <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-3">Severity</h3>
+              <div className="flex flex-wrap gap-2">
+                {['all','Critical','High','Moderate','Low'].map(level => (
+                  <button
+                    key={level}
+                    onClick={() => setSelectedFilters({ ...selectedFilters, severity: level })}
+                    className={`px-3 py-1 rounded-full text-xs border transition-colors ${
+                      selectedFilters.severity === level
+                        ? 'bg-red-600 text-white border-red-600'
+                        : 'border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:border-red-500'
+                    }`}
+                    type="button"
+                  >
+                    {level}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        {/* Content */}
+        <section className="lg:col-span-9">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Community Reports</h2>
+            <div>
+              <select
+                className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm dark:bg-gray-700 dark:text-white"
+                defaultValue="latest"
               >
-                <Filter className="w-4 h-4 mr-2" />
-                Filters
-              </button>
-              {filterDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-56 bg-white border border-gray-200 rounded shadow-lg z-10 p-4">
-                  <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
-                    <select
-                      value={selectedFilters.verification}
-                      onChange={(e) => setSelectedFilters({ ...selectedFilters, verification: e.target.value })}
-                      className="w-full px-3 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#5899E2]"
-                    >
-                      <option value="all">All Status</option>
-                      <option value="verified">Verified</option>
-                      <option value="pending">Pending</option>
-                      <option value="unverified">Unverified</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Severity</label>
-                    <select
-                      value={selectedFilters.severity}
-                      onChange={(e) => setSelectedFilters({ ...selectedFilters, severity: e.target.value })}
-                      className="w-full px-3 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#5899E2]"
-                    >
-                      <option value="all">All Severity</option>
-                      <option value="Critical">Critical</option>
-                      <option value="High">High</option>
-                      <option value="Moderate">Moderate</option>
-                      <option value="Low">Low</option>
-                    </select>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-      {filteredReports.map((report) => (
-        <div
-          key={report.id}
-          className={`bg-white rounded-lg shadow-2xl p-6 transition-transform duration-200 
-            hover:scale-[1.02] hover:shadow-3xl cursor-pointer border-l-4 ${
-            report.severity === 'Critical' ? 'border-red-500' :
-            report.severity === 'High' ? 'border-orange-500' :
-            report.severity === 'Moderate' ? 'border-yellow-500' :
-            'border-green-500'
-          }`}
-        >
-          <div className="flex items-start justify-between mb-4">
-            <div className="flex items-center space-x-3">
-              <div className={`w-4 h-4 rounded-full ${
-                report.verified ? 'bg-green-500' : 'bg-red-500'
-              }`}></div>
-              <h3 className="font-semibold text-lg">{report.type}</h3>
-              {report.verified && <CheckCircle className="w-5 h-5 text-green-500" />}
-              {report.official && <Badge className="w-5 h-5 text-blue-500" />}
-              <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                report.status === 'verified' ? 'bg-green-100 text-green-700' :
-                report.status === 'pending' ? 'bg-yellow-100 text-yellow-700' :
-                'bg-red-100 text-red-700'
-              }`}>
-                {report.status.toUpperCase()}
-              </span>
-            </div>
-            <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-              report.verified ? 'text-green-700' : 'text-red-700'
-            } bg-opacity-20 ${
-              report.verified ? 'bg-green-500' : 'bg-red-500'
-            }`}>
-              {report.severity}
-            </span>
-          </div>
-          
-          <p className="text-gray-700 mb-3">{report.description}</p>
-          
-          <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
-            <div className="flex items-center space-x-4">
-              <span className="flex items-center">
-                <MapPin className="w-4 h-4 mr-1" />
-                {report.location}
-              </span>
-              <span className="flex items-center">
-                <Clock className="w-4 h-4 mr-1" />
-                {report.time}
-              </span>
+                <option value="latest">Latest</option>
+                <option value="verified">Verified first</option>
+                <option value="severity">Severity high first</option>
+              </select>
             </div>
           </div>
 
-          <div className="flex items-center justify-between pt-4 border-t border-gray-200">
-            <div className="flex items-center space-x-4">
-              <button className="flex items-center space-x-1 bg-[#45C476] text-white px-3 py-1 rounded hover:bg-[#349c5a]">
-                <ThumbsUp className="w-4 h-4" />
-                <span>{report.upvotes}</span>
-              </button>
-              <button className="flex items-center space-x-1 bg-[#5899E2] text-white px-3 py-1 rounded hover:bg-[#4177b7]">
-                <ThumbsDown className="w-4 h-4" />
-                <span>{report.downvotes}</span>
-              </button>
-              <div className="flex items-center space-x-1 text-blue-600 px-3 py-1 rounded">
-                <MessageSquare className="w-4 h-4" />
-                <span>{report.comments.length}</span>
-                <span className="ml-1">Comments</span>
-              </div>
-            </div>
-            {report.official && (
-              <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full font-medium">
-                Official Source
-              </span>
-            )}
-          </div>
-          {/* Comments Section */}
-          <div className="mt-4">
-            <div className="space-y-2">
-              {report.comments.map((comment, idx) => (
-                <div key={idx} className="flex items-center space-x-2">
-                  <User className="w-4 h-4 text-blue-400" />
-                  <span className="font-medium text-gray-700">{comment.user}:</span>
-                  <span className="text-gray-600">{comment.text}</span>
-                </div>
-              ))}
-            </div>
-            <div className="flex mt-2 space-x-2">
-              <input
-                type="text"
-                className="flex-1 px-3 py-1 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-[#5899E2]"
-                placeholder="Add a comment..."
-                value={newComment[report.id] || ''}
-                onChange={e => setNewComment({ ...newComment, [report.id]: e.target.value })}
-              />
-              <button
-                className="bg-[#45C476] text-white px-3 py-1 rounded-md text-sm font-medium hover:bg-[#349c5a]"
-                onClick={() => handleAddComment(report.id)}
-                type="button"
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            {filteredReports.map((report) => (
+              <div
+                key={report.id}
+                className="bg-white dark:bg-gray-800 rounded-lg shadow p-5 border border-gray-100 dark:border-gray-700 hover:shadow-lg transition"
               >
-                Post
-              </button>
-            </div>
+                <div className="flex items-start justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    {report.verified && <CheckCircle className="w-4 h-4 text-green-500" />}
+                    {report.official && <Badge className="w-4 h-4 text-blue-500" />}
+                    <span className="text-xs px-2 py-1 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200">
+                      {report.type}
+                    </span>
+                    <span className={`text-xs px-2 py-1 rounded-full ${
+                      report.severity === 'Critical' ? 'bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-200' :
+                      report.severity === 'High' ? 'bg-orange-100 text-orange-700 dark:bg-orange-900 dark:text-orange-200' :
+                      report.severity === 'Moderate' ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-200' :
+                      'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-200'
+                    }`}>
+                      {report.severity}
+                    </span>
+                  </div>
+                  <span className={`text-xs px-2 py-1 rounded-full ${
+                    report.status === 'verified' ? 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-200' :
+                    report.status === 'pending' ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-200' :
+                    'bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-200'
+                  }`}>
+                    {report.status.toUpperCase()}
+                  </span>
+                </div>
+
+                <p className="text-sm text-gray-700 dark:text-gray-200 mb-3">{report.description}</p>
+
+                <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 mb-4">
+                  <span className="flex items-center">
+                    <MapPin className="w-4 h-4 mr-1" />
+                    {report.location}
+                  </span>
+                  <span className="flex items-center">
+                    <Clock className="w-4 h-4 mr-1" />
+                    {report.time}
+                  </span>
+                </div>
+
+                <div className="flex items-center justify-between pt-3 border-t border-gray-200 dark:border-gray-700">
+                  <div className="flex items-center gap-3">
+                    <button className="flex items-center gap-1 text-xs bg-[#45C476] text-white px-2.5 py-1 rounded hover:bg-[#349c5a]">
+                      <ThumbsUp className="w-3.5 h-3.5" />
+                      <span>{report.upvotes}</span>
+                    </button>
+                    <button className="flex items-center gap-1 text-xs bg-[#5899E2] text-white px-2.5 py-1 rounded hover:bg-[#4177b7]">
+                      <ThumbsDown className="w-3.5 h-3.5" />
+                      <span>{report.downvotes}</span>
+                    </button>
+                    <span className="flex items-center gap-1 text-blue-600 dark:text-blue-400 text-xs">
+                      <MessageSquare className="w-3.5 h-3.5" />
+                      {report.comments.length}
+                    </span>
+                  </div>
+                  {report.official && (
+                    <span className="text-[10px] bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 px-2 py-0.5 rounded-full font-medium">
+                      Official
+                    </span>
+                  )}
+                </div>
+
+                <div className="mt-3 flex gap-2">
+                  <input
+                    type="text"
+                    className="flex-1 px-3 py-1 border border-gray-300 dark:border-gray-600 rounded-md text-sm focus:ring-2 focus:ring-[#5899E2] dark:bg-gray-700 dark:text-white"
+                    placeholder="Add a comment..."
+                    value={newComment[report.id] || ''}
+                    onChange={e => setNewComment({ ...newComment, [report.id]: e.target.value })}
+                  />
+                  <button
+                    className="bg-[#45C476] text-white px-3 py-1 rounded-md text-sm font-medium hover:bg-[#349c5a]"
+                    onClick={() => handleAddComment(report.id)}
+                    type="button"
+                  >
+                    Post
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
-        </div>
-      ))}
+        </section>
+      </div>
     </div>
   );
 };

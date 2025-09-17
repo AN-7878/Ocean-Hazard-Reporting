@@ -32,7 +32,7 @@ const Chatbot = () => {
   if (!open) {
     return (
       <button
-        className="fixed bottom-4 right-4 bg-blue-600 text-white px-4 py-2 rounded-full shadow-lg z-50"
+        className="fixed bottom-4 right-4 bg-blue-600 text-white px-4 py-2 rounded-full shadow-lg z-50 dark:bg-blue-500"
         onClick={() => setOpen(true)}
       >
         Open Chatbot
@@ -41,21 +41,21 @@ const Chatbot = () => {
   }
 
   return (
-    <div className="fixed bottom-4 right-4 bg-white shadow-lg rounded-lg p-4 z-50 w-80">
+    <div className="fixed bottom-4 right-4 bg-white dark:bg-gray-800 dark:text-white shadow-lg rounded-lg p-4 z-50 w-80">
       <div className="flex justify-between items-center mb-2">
-        <span className="font-bold text-blue-700">OceanGuard Chatbot</span>
+        <span className="font-bold text-blue-700 dark:text-blue-300">SAMUDRASETU Chatbot</span>
         <button
-          className="text-gray-500 hover:text-red-500 text-lg font-bold"
+          className="text-gray-500 dark:text-gray-300 hover:text-red-500 text-lg font-bold"
           onClick={() => setOpen(false)}
           title="Close"
         >
           ×
         </button>
       </div>
-      <div className="h-56 overflow-y-auto mb-2 border rounded p-2 bg-gray-50">
+      <div className="h-56 overflow-y-auto mb-2 border border-gray-200 dark:border-gray-700 rounded p-2 bg-gray-50 dark:bg-gray-700">
         {messages.map((msg, idx) => (
           <div key={idx} className={`mb-2 text-sm ${msg.sender === 'user' ? 'text-right' : 'text-left'}`}>
-            <span className={`inline-block px-2 py-1 rounded ${msg.sender === 'user' ? 'bg-blue-100 text-blue-700' : 'bg-gray-200 text-gray-700'}`}>
+            <span className={`inline-block px-2 py-1 rounded ${msg.sender === 'user' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200' : 'bg-gray-200 text-gray-700 dark:bg-gray-600 dark:text-white'}`}>
               {msg.text}
             </span>
           </div>
@@ -64,14 +64,14 @@ const Chatbot = () => {
       <div className="flex">
         <input
           type="text"
-          className="flex-1 border rounded px-2 py-1 text-sm focus:outline-none"
+          className="flex-1 border border-gray-300 dark:border-gray-600 rounded px-2 py-1 text-sm focus:outline-none dark:bg-gray-700 dark:text-white"
           placeholder="Ask a question..."
           value={input}
           onChange={e => setInput(e.target.value)}
           onKeyDown={e => e.key === 'Enter' && sendMessage()}
         />
         <button
-          className="ml-2 bg-blue-600 text-white px-3 py-1 rounded text-sm font-medium"
+          className="ml-2 bg-blue-600 dark:bg-blue-500 text-white px-3 py-1 rounded text-sm font-medium"
           onClick={sendMessage}
         >
           Send

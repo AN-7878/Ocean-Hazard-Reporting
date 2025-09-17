@@ -14,7 +14,7 @@ type Shelter = {
 
 type Props = { shelters: Shelter[]; userRole?: string };
 
-const tabContainerClass = "space-y-6 max-w-2xl mx-auto py-8";
+const tabContainerClass = "space-y-6 w-full py-8";
 
 const ShelterFinder: React.FC<Props> = ({ shelters: initialShelters, userRole = "citizen" }) => {
   const [addingShelter, setAddingShelter] = useState(false);
@@ -129,12 +129,12 @@ const ShelterFinder: React.FC<Props> = ({ shelters: initialShelters, userRole = 
   });
 
   return (
-    <div className={tabContainerClass} style={{ backgroundColor: 'white' }}>
-      <div className="bg-white rounded-lg shadow-md p-6">
+    <div className={tabContainerClass}>
+      <div className="bg-white dark:bg-gray-800 dark:text-white rounded-lg shadow-md p-6">
         <div className="flex items-center justify-between mb-6">
           <div>
             <h2 className="text-lg font-semibold text-gray-900">Emergency Shelters</h2>
-            <p className="text-sm text-gray-600">Find nearby safe shelters and emergency contacts</p>
+            <p className="text-sm text-gray-600 dark:text-gray-300">Find nearby safe shelters and emergency contacts</p>
           </div>
           <div className="flex space-x-2">
             <button className="bg-[#5899E2] text-white px-4 py-2 rounded-md font-medium hover:bg-[#4177b7] transition-colors flex items-center">
@@ -156,12 +156,12 @@ const ShelterFinder: React.FC<Props> = ({ shelters: initialShelters, userRole = 
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {shelters.map((shelter) => (
-            <div key={shelter.id} className="bg-white rounded-lg shadow-2xl p-4 
-                transition-transform duration-200 hover:scale-105 hover:shadow-3xl cursor-pointer border border-gray-200">
+            <div key={shelter.id} className="bg-white dark:bg-gray-900 dark:text-white rounded-lg shadow-2xl p-4 
+                transition-transform duration-200 hover:scale-105 hover:shadow-3xl cursor-pointer border border-gray-200 dark:border-gray-700">
               <div className="flex items-start justify-between mb-3">
                 <div>
                   <h3 className="font-semibold text-lg">{shelter.name}</h3>
-                  <p className="text-sm text-gray-600 flex items-center mt-1">
+                  <p className="text-sm text-gray-600 dark:text-gray-300 flex items-center mt-1">
                     <MapPin className="w-4 h-4 mr-1" />
                     {shelter.address}
                   </p>
@@ -176,13 +176,13 @@ const ShelterFinder: React.FC<Props> = ({ shelters: initialShelters, userRole = 
               </div>
               
               <div className="grid grid-cols-2 gap-4 mb-4">
-                <div className="text-center p-2 bg-gray-50 rounded">
-                  <p className="text-2xl font-bold text-gray-900">{shelter.capacity}</p>
-                  <p className="text-xs text-gray-600">Total Capacity</p>
+                <div className="text-center p-2 bg-gray-50 dark:bg-gray-800 rounded">
+                  <p className="text-2xl font-bold text-gray-900 dark:text-white">{shelter.capacity}</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-300">Total Capacity</p>
                 </div>
-                <div className="text-center p-2 bg-green-50 rounded">
+                <div className="text-center p-2 bg-green-50 dark:bg-green-900 rounded">
                   <p className="text-2xl font-bold text-green-600">{shelter.available}</p>
-                  <p className="text-xs text-gray-600">Available</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-300">Available</p>
                 </div>
               </div>
 
@@ -215,34 +215,34 @@ const ShelterFinder: React.FC<Props> = ({ shelters: initialShelters, userRole = 
       {/* Add Shelter Modal */}
       {addingShelter && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-full max-w-md">
+          <div className="bg-white dark:bg-gray-800 dark:text-white rounded-lg p-6 w-full max-w-md">
             <h3 className="text-lg font-semibold mb-4">Add New Shelter</h3>
             <div className="space-y-4">
               <input
                 type="text"
                 placeholder="Shelter Name"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#5899E2]"
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-[#5899E2] dark:bg-gray-700 dark:text-white"
                 value={newShelter.name}
                 onChange={(e) => setNewShelter({ ...newShelter, name: e.target.value })}
               />
               <input
                 type="text"
                 placeholder="Address"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#5899E2]"
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-[#5899E2] dark:bg-gray-700 dark:text-white"
                 value={newShelter.address}
                 onChange={(e) => setNewShelter({ ...newShelter, address: e.target.value })}
               />
               <input
                 type="number"
                 placeholder="Capacity"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#5899E2]"
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-[#5899E2] dark:bg-gray-700 dark:text-white"
                 value={newShelter.capacity}
                 onChange={(e) => setNewShelter({ ...newShelter, capacity: e.target.value })}
               />
               <input
                 type="tel"
                 placeholder="Contact Number"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#5899E2]"
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-[#5899E2] dark:bg-gray-700 dark:text-white"
                 value={newShelter.contact}
                 onChange={(e) => setNewShelter({ ...newShelter, contact: e.target.value })}
               />
@@ -272,7 +272,7 @@ const ShelterFinder: React.FC<Props> = ({ shelters: initialShelters, userRole = 
               </button>
               <button
                 onClick={() => setAddingShelter(false)}
-                className="flex-1 bg-gray-300 text-gray-700 px-4 py-2 rounded-md font-medium hover:bg-gray-400 transition-colors"
+                className="flex-1 bg-gray-300 dark:bg-gray-600 dark:text-white text-gray-700 px-4 py-2 rounded-md font-medium hover:bg-gray-400 transition-colors"
               >
                 Cancel
               </button>
