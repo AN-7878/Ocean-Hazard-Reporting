@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+
+
 import { 
   MapPin, 
   AlertTriangle, 
@@ -36,6 +38,8 @@ import {
 import WaveIcon from './components/icons/WaveIcon';
 import Chatbot from './Chatbot';
 import DisasterMap from './DisasterMap';
+
+
 
 type ReportComment = { user: string; text: string };
 type CommunityReport = {

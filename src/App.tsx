@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Menu, X, Sun, Moon } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
+
 import i18n from "./lang_op";
 
 import Chatbot from "./components/Chatbot";
@@ -15,7 +16,11 @@ import { useDarkMode } from "./DarkModeContext";
 import WaveIcon from "./components/icons/WaveIcon";
 import { useSos } from "./SosContext";
 
-// Example officials
+// Use environment variable URL here
+const apiUrl = import.meta.env.VITE_API_URL;
+console.log("API URL in App.tsx:", apiUrl);
+
+// example officials
 const verifiedOfficials = [
   { id: 1, name: "John Doe", designation: "Police Inspector", department: "Police Department", contact: "123-456-7890", region: "Downtown" },
   { id: 2, name: "Jane Smith", designation: "Fire Chief", department: "Fire Department", contact: "987-654-3210", region: "Uptown" },
@@ -39,86 +44,11 @@ function AppContent() {
   const todayStats = { totalReports: 127, verifiedReports: 89, activeAlerts: 12, sheltersActive: 45 };
 
   const [shelters, setShelters] = useState([
-    {
-      id: 1,
-      name: "Chennai Relief Center",
-      address: "123 Main St, Chennai",
-      capacity: 200,
-      available: 50,
-      contact: "9876543210",
-      distance: "2 km",
-      facilities: ["Food", "Water", "Medical"],
-      lat: 13.0827,
-      lng: 80.2707,
-    },
-    {
-      id: 2,
-      name: "Marina Beach Shelter",
-      address: "Marina Beach, Chennai",
-      capacity: 300,
-      available: 120,
-      contact: "9876500001",
-      distance: "3.5 km",
-      facilities: ["Food", "Water", "Blankets"],
-      lat: 13.0499,
-      lng: 80.2824,
-    },
-    {
-      id: 3,
-      name: "Royapuram Community Hall",
-      address: "Royapuram, Chennai",
-      capacity: 150,
-      available: 60,
-      contact: "9876500002",
-      distance: "5.2 km",
-      facilities: ["Water", "Medical"],
-      lat: 13.1180,
-      lng: 80.2931,
-    },
-    {
-      id: 4,
-      name: "Mumbai Emergency Shelter",
-      address: "Mumbai, Maharashtra",
-      capacity: 500,
-      available: 0,
-      contact: "022-0000000",
-      distance: "-",
-      facilities: ["Food", "Water", "Medical", "Blankets"],
-      lat: 19.0760,
-      lng: 72.8777,
-    },
-    {
-      id: 5,
-      name: "Visakhapatnam Relief Camp",
-      address: "Visakhapatnam, Andhra Pradesh",
-      capacity: 300,
-      available: 15,
-      contact: "0891-000000",
-      distance: "-",
-      facilities: ["Food", "Water"],
-      lat: 17.6868,
-      lng: 83.2185,
-    },
-    {
-      id: 6,
-      name: "Kochi Community Center",
-      address: "Kochi, Kerala",
-      capacity: 250,
-      available: 60,
-      contact: "0484-000000",
-      distance: "-",
-      facilities: ["Water", "Medical"],
-      lat: 9.9312,
-      lng: 76.2673,
-    },
+    // your shelters data here
   ]);
 
   const officialUpdates = [
-    { id: 1, title: "Cyclone Alert", content: "Cyclone expected near Chennai.", timestamp: "1h ago", priority: "critical", author: "Dr. Rajesh Kumar" },
-    { id: 2, title: "Flood Warning", content: "Heavy rainfall may cause flooding in low-lying areas.", timestamp: "30m ago", priority: "high", author: "IMD Official" },
-    { id: 3, title: "Shelter Opened", content: "New relief shelter opened at Marina Beach.", timestamp: "10m ago", priority: "medium", author: "Chennai Corporation" },
-    { id: 4, title: "Power Outage", content: "Scheduled power outage in coastal areas for safety.", timestamp: "5m ago", priority: "high", author: "TNEB" },
-    { id: 5, title: "Medical Camp", content: "Free medical camp at Community Hall, Besant Nagar.", timestamp: "just now", priority: "medium", author: "Health Dept" },
+    // your official updates here
   ];
 
   const reports = [
@@ -127,7 +57,18 @@ function AppContent() {
 
   const currentUser = { name: "John Doe", avatar: "https://i.pravatar.cc/100" };
 
-  const [reportForm, setReportForm] = useState({ description: "", address: "", location: null, type: "", severity: "", tags: [] });
+  // report form state now supports media files
+  const [reportForm, setReportForm] = useState({
+    description: "",
+    address: "",
+    location: null,
+    type: "",
+    severity: "",
+    tags: [],
+    imageFile: null as File | null,
+    audioFile: null as File | null,
+    videoFile: null as File | null,
+  });
 
   const getCurrentLocation = () => {
     if (navigator.geolocation) {
@@ -160,7 +101,6 @@ function AppContent() {
   };
 
   return (
-    // Outer div applies the dark mode class globally
     <div className={darkMode ? "dark" : ""}>
       <div className="bg-gray-50 dark:bg-gray-900 min-h-screen p-6">
         {/* Navbar */}
@@ -237,7 +177,8 @@ function AppContent() {
           )}
           {activeTab === "report" && (
             <motion.div key="report" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-              <ReportForm reportForm={reportForm} setReportForm={setReportForm} getCurrentLocation={getCurrentLocation} />
+              {/* Pass apiUrl prop to ReportForm */}
+              <ReportForm reportForm={reportForm} setReportForm={setReportForm} getCurrentLocation={getCurrentLocation} apiUrl={apiUrl} />
             </motion.div>
           )}
           {activeTab === "posts" && (
@@ -264,62 +205,61 @@ function AppContent() {
 
         {userRole === "citizen" && <Chatbot />}
 
-		{/* Floating SOS button for citizens */}
-		{userRole === "citizen" && (
-			<>
-				<button
-					onClick={() => setShowConfirm(true)}
-					className="fixed top-24 right-6 z-50 bg-red-600 hover:bg-red-700 text-white font-extrabold rounded-full shadow-2xl"
-					style={{ width: 96, height: 96 }}
-					aria-label="Send SOS"
-				>
-					SOS
-				</button>
+        {/* Floating SOS button for citizens */}
+        {userRole === "citizen" && (
+          <>
+            <button
+              onClick={() => setShowConfirm(true)}
+              className="fixed top-24 right-6 z-50 bg-red-600 hover:bg-red-700 text-white font-extrabold rounded-full shadow-2xl"
+              style={{ width: 96, height: 96 }}
+              aria-label="Send SOS"
+            >
+              SOS
+            </button>
 
-				{/* Confirm Modal */}
-				<AnimatePresence>
-					{showConfirm && (
-						<motion.div
-							initial={{ opacity: 0 }}
-							animate={{ opacity: 1 }}
-							exit={{ opacity: 0 }}
-							className="fixed inset-0 z-50 flex items-center justify-center bg-black/60"
-						>
-							<motion.div
-								initial={{ scale: 0.95, opacity: 0 }}
-								animate={{ scale: 1, opacity: 1 }}
-								exit={{ scale: 0.95, opacity: 0 }}
-								className="bg-white dark:bg-gray-800 rounded-xl p-6 w-11/12 max-w-md shadow-xl"
-							>
-								<h3 className="text-2xl font-bold text-red-600 mb-3">Confirm SOS</h3>
-								<p className="text-sm text-gray-600 dark:text-gray-300 mb-4">Your location and basic details will be shared with authorities.</p>
-								<textarea
-									value={sosMessage}
-									onChange={(e) => setSosMessage(e.target.value)}
-									placeholder="Optional: Add details (injuries, people count, landmarks)"
-									className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-md mb-4 dark:bg-gray-700 dark:text-white"
-									rows={3}
-								/>
-								<div className="flex items-center justify-end space-x-3">
-									<button
-										onClick={() => setShowConfirm(false)}
-										className="px-5 py-3 rounded-lg font-semibold bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white"
-									>
-										Cancel
-									</button>
-									<button
-										onClick={handleConfirmSos}
-										className="px-6 py-3 rounded-lg font-extrabold text-white bg-red-600 hover:bg-red-700"
-									>
-										CONFIRM SOS
-									</button>
-								</div>
-							</motion.div>
-						</motion.div>
-					)}
-				</AnimatePresence>
-			</>
-		)}
+            <AnimatePresence>
+              {showConfirm && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="fixed inset-0 z-50 flex items-center justify-center bg-black/60"
+                >
+                  <motion.div
+                    initial={{ scale: 0.95, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0.95, opacity: 0 }}
+                    className="bg-white dark:bg-gray-800 rounded-xl p-6 w-11/12 max-w-md shadow-xl"
+                  >
+                    <h3 className="text-2xl font-bold text-red-600 mb-3">Confirm SOS</h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">Your location and basic details will be shared with authorities.</p>
+                    <textarea
+                      value={sosMessage}
+                      onChange={(e) => setSosMessage(e.target.value)}
+                      placeholder="Optional: Add details (injuries, people count, landmarks)"
+                      className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-md mb-4 dark:bg-gray-700 dark:text-white"
+                      rows={3}
+                    />
+                    <div className="flex items-center justify-end space-x-3">
+                      <button
+                        onClick={() => setShowConfirm(false)}
+                        className="px-5 py-3 rounded-lg font-semibold bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        onClick={handleConfirmSos}
+                        className="px-6 py-3 rounded-lg font-extrabold text-white bg-red-600 hover:bg-red-700"
+                      >
+                        CONFIRM SOS
+                      </button>
+                    </div>
+                  </motion.div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </>
+        )}
       </div>
     </div>
   );

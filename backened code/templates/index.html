@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Data</title>
+</head>
+<body>
+    <h1>Upload Geotagged Image, Description, and Audio</h1>
+
+    <form id="uploadForm" action="{{ url_for('upload_file') }}" method="POST" enctype="multipart/form-data">
+        <label for="image">Geotagged Image:</label><br>
+        <input type="file" id="image" name="image" accept="image/*"><br><br>
+
+        <label for="description">Text Description:</label><br>
+        <textarea id="description" name="description" rows="4" cols="50"></textarea><br><br>
+
+        <label>Audio Recording:</label><br>
+        <button type="button" id="recordButton">Start Recording</button>
+        <button type="button" id="stopButton" disabled>Stop Recording</button>
+        <input type="hidden" id="audioData" name="audioData">
+        <audio id="audioPlayback" controls></audio><br><br>
+
+        <input type="submit" value="Upload Data">
+    </form>
+    
+    <br>
+    <a href="{{ url_for('report') }}">View Your Uploaded Reports</a>
+    <br>
+    <a href="{{ url_for('social_media_posts') }}">View Social Media Analytics</a>
+    
+    <script>
+        let recorder;
+        let audioChunks = [];
+
+        document.getElementById('recordButton').addEventListener('click', async () => {
+            document.getElementById('recordButton').disabled = true;
+            document.getElementById('stopButton').disabled = false;
+
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            recorder = new MediaRecorder(stream);
+
+            recorder.ondataavailable = e => {
+                audioChunks.push(e.data);
+            };
+
+            recorder.onstop = () => {
+                const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                const reader = new FileReader();
+                reader.readAsDataURL(audioBlob);
+
+                reader.onloadend = () => {
+                    document.getElementById('audioData').value = reader.result;
+                    document.getElementById('audioPlayback').src = reader.result;
+                };
+            };
+
+            recorder.start();
+        });
+
+        document.getElementById('stopButton').addEventListener('click', () => {
+            document.getElementById('recordButton').disabled = false;
+            document.getElementById('stopButton').disabled = true;
+            recorder.stop();
+        });
+    </script>
+</body>
+</html>

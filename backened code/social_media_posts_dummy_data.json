@@ -1,0 +1,152 @@
+[
+{
+"user": {
+"username": "CoastalWatch_45",
+"user_id": "user_1a2b3c",
+"followers_count": 1200
+},
+"timestamp": "2025-09-08T12:00:00Z",
+"location": {
+"latitude": 19.0760,
+"longitude": 72.8777,
+"city": "Mumbai",
+"state": "Maharashtra",
+"country": "India"
+},
+"hazard_report": {
+"hazard_type": "oil_sheen",
+"severity_level": "critical",
+"description": "Report of a small oil sheen spotted off the coast of Mumbai. Emergency services have been notified. Avoid this area. #OilSpill #Mumbai",
+"media_url": "https://www.google.com/search?q=https://dummy-image-url.com/mumbai-oil-sheen.mp4",
+"hashtags": ["#OilSpill", "#Mumbai", "#OceanPollution", "#MarineLife"]
+},
+"social_metrics": {
+"likes": 150,
+"shares": 75,
+"comments": 20
+},
+"analytics": {
+"sentiment": "negative"
+}
+},
+{
+"user": {
+"username": "OdishaFisherman",
+"user_id": "user_98c6d1",
+"followers_count": 75
+},
+"timestamp": "2025-09-06T09:00:00Z",
+"location": {
+"latitude": 19.8135,
+"longitude": 85.8315,
+"city": "Puri",
+"state": "Odisha",
+"country": "India"
+},
+"hazard_report": {
+"hazard_type": "coastal_erosion",
+"severity_level": "high",
+"description": "The waves are getting closer and closer to the houses here. Coastal erosion is a serious problem in our village. We need help! #Puri #CoastalErosion",
+"media_url": "https://www.google.com/search?q=https://dummy-image-url.com/puri-erosion.jpg",
+"hashtags": ["#Puri", "#CoastalErosion", "#ClimateChangeImpact", "#Odisha"]
+},
+"social_metrics": {
+"likes": 300,
+"shares": 210,
+"comments": 40
+},
+"analytics": {
+"sentiment": "negative"
+}
+},
+{
+"user": {
+"username": "AndhraCycloneAlert",
+"user_id": "user_1c5e9a",
+"followers_count": 9500
+},
+"timestamp": "2025-09-08T10:00:00Z",
+"location": {
+"latitude": 17.6868,
+"longitude": 83.2185,
+"city": "Visakhapatnam",
+"state": "Andhra Pradesh",
+"country": "India"
+},
+"hazard_report": {
+"hazard_type": "hurricane",
+"severity_level": "critical",
+"description": "Heavy winds and rain from Cyclone 'Fani' are hitting the Visakhapatnam coast. Stay indoors, and follow official advisories. #CycloneFani #Visakhapatnam #WeatherAlert",
+"media_url": "https://www.google.com/search?q=https://dummy-image-url.com/vizag-cyclone.jpg",
+"hashtags": ["#Hurricane", "#Visakhapatnam", "#WeatherAlert", "#AndhraPradesh"]
+},
+"social_metrics": {
+"likes": 850,
+"shares": 520,
+"comments": 110
+},
+"analytics": {
+"sentiment": "negative"
+}
+},
+{
+"user": {
+"username": "KeralaWeatherUpdate",
+"user_id": "user_5b2d7e",
+"followers_count": 2100
+},
+"timestamp": "2025-09-07T16:45:00Z",
+"location": {
+"latitude": 10.8505,
+"longitude": 76.2711,
+"city": "Malappuram",
+"state": "Kerala",
+"country": "India"
+},
+"hazard_report": {
+"hazard_type": "landslides",
+"severity_level": "high",
+"description": "Landslide reported near the coastal road due to continuous heavy rainfall. Caution advised for commuters. #Kerala #Landslide #MonsoonDisaster",
+"media_url": "https://www.google.com/search?q=https://dummy-image-url.com/kerala-landslide.jpg",
+"hashtags": ["#Landslide", "#Kerala", "#MonsoonDisaster", "#ClimateImpact"]
+},
+"social_metrics": {
+"likes": 250,
+"shares": 100,
+"comments": 25
+},
+"analytics": {
+"sentiment": "negative"
+}
+},
+{
+"user": {
+"username": "GlobalSeaRise",
+"user_id": "user_7f3a9c",
+"followers_count": 50000
+},
+"timestamp": "2025-09-05T18:00:00Z",
+"location": {
+"latitude": 8.0883,
+"longitude": 77.5385,
+"city": "Kanyakumari",
+"state": "Tamil Nadu",
+"country": "India"
+},
+"hazard_report": {
+"hazard_type": "sea_level_rise",
+"severity_level": "medium",
+"description": "The high tide mark is getting higher every year in Kanyakumari, eroding more of the coastline. We need sustainable solutions now. #SeaLevelRise #Kanyakumari #ClimateAction",
+"media_url": "https://www.google.com/search?q=https://dummy-image-url.com/kanyakumari-sealevel.jpg",
+"hashtags": ["#SeaLevelRise", "#Kanyakumari", "#ClimateAction", "#CoastalErosion"]
+},
+"social_metrics": {
+"likes": 1200,
+"shares": 450,
+"comments": 80
+},
+"analytics": {
+"sentiment": "negative"
+}
+}
+]

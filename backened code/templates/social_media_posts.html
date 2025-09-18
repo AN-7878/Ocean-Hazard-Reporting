@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coastal Hazard Reports</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 2rem;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .header {
+            font-size: 2.25rem;
+            font-weight: 800;
+            color: #1a202c;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .reports-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .report-card {
+            background-color: #fff;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            padding: 1.5rem;
+            border: 1px solid #e2e8f0;
+            transition: box-shadow 0.3s ease-in-out;
+        }
+        .report-card:hover {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            gap: 1rem;
+        }
+        .user-avatar {
+            background-color: #3b82f6;
+            border-radius: 9999px;
+            width: 3rem;
+            height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.125rem;
+            flex-shrink: 0;
+        }
+        .user-details {
+            min-width: 0;
+            flex: 1;
+        }
+        .username {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1f2937;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .followers {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+        .hazard-details {
+            background-color: #f9fafb;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        .report-label {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 0.5rem;
+        }
+        .hazard-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #dc2626;
+            margin-bottom: 0.5rem;
+        }
+        .severity-badge {
+            display: inline-block;
+            margin-left: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .severity-critical { background-color: #fee2e2; color: #dc2626; }
+        .severity-high { background-color: #fef3c7; color: #d97706; }
+        .severity-medium { background-color: #dbeafe; color: #2563eb; }
+        .severity-low { background-color: #d1fae5; color: #059669; }
+        .description {
+            color: #374151;
+            line-height: 1.625;
+        }
+        .location-and-media {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .location-info {
+            flex: 1;
+        }
+        .media-link {
+            flex: 1;
+        }
+        .section-label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #6b7280;
+        }
+        .location-text {
+            color: #374151;
+        }
+        .coords-text {
+            font-size: 0.75rem;
+            color: #9ca3af;
+            margin-top: 0.25rem;
+        }
+        .link {
+            color: #3b82f6;
+            text-decoration: underline;
+        }
+        .placeholder-text {
+            color: #9ca3af;
+        }
+        .hashtags {
+            margin-top: 1rem;
+        }
+        .hashtag-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .hashtag {
+            background-color: #f3f4f6;
+            color: #4b5563;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.25rem 0.625rem;
+            border-radius: 9999px;
+        }
+        .social-metrics {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+        .metric-value {
+            font-weight: 700;
+            color: #374151;
+        }
+        @media (min-width: 768px) {
+            .location-and-media {
+                flex-direction: row;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="header">Coastal Hazard Reports</h1>
+
+        <div class="reports-grid">
+            <!-- Loop through each report passed from the backend -->
+            {% for post in reports %}
+                <div class="report-card">
+                    <!-- User and Timestamp Section -->
+                    <div class="user-info">
+                        <div class="user-avatar">
+                            {{ post.user.username[0].upper() }}
+                        </div>
+                        <div class="user-details">
+                            <p class="username">{{ post.user.username }}</p>
+                            <p class="followers">
+                                Followers: {{ post.user.followers_count }} •
+                                <span class="ml-1">{{ post.timestamp | default('No date provided') }}</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Hazard Report Details Section -->
+                    <div class="hazard-details">
+                        <p class="report-label">Report Details:</p>
+                        <h2 class="hazard-title">
+                            {{ post.hazard_report.hazard_type | replace('_', ' ') | title }}
+                            <span class="severity-badge
+                                {% if post.hazard_report.severity_level == 'critical' %}severity-critical{% endif %}
+                                {% if post.hazard_report.severity_level == 'high' %}severity-high{% endif %}
+                                {% if post.hazard_report.severity_level == 'medium' %}severity-medium{% endif %}
+                                {% if post.hazard_report.severity_level == 'low' %}severity-low{% endif %}">
+                                {{ post.hazard_report.severity_level | capitalize }}
+                            </span>
+                        </h2>
+                        <p class="description">{{ post.hazard_report.description }}</p>
+                    </div>
+
+                    <!-- Location and Media Section -->
+                    <div class="location-and-media">
+                        <div class="location-info">
+                            <p class="section-label">Location:</p>
+                            <p class="location-text">{{ post.location.city }}, {{ post.location.state }}</p>
+                            <p class="coords-text">Lat: {{ post.location.latitude }}, Lon: {{ post.location.longitude }}</p>
+                        </div>
+                        <div class="media-link">
+                            {% if post.hazard_report.media_url %}
+                                <a href="{{ post.hazard_report.media_url }}" target="_blank" class="link">
+                                    View Media
+                                </a>
+                            {% else %}
+                                <p class="placeholder-text">No media provided.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Hashtags Section -->
+                    {% if post.hazard_report.hashtags %}
+                        <div class="hashtags">
+                            <p class="section-label">Hashtags:</p>
+                            <div class="hashtag-list">
+                                {% for hashtag in post.hazard_report.hashtags %}
+                                    <span class="hashtag">
+                                        {{ hashtag }}
+                                    </span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                    
+                    <!-- Social Metrics Section -->
+                    <div class="social-metrics">
+                        <span><span class="metric-value">{{ post.social_metrics.likes }}</span> Likes</span>
+                        <span><span class="metric-value">{{ post.social_metrics.shares }}</span> Shares</span>
+                        <span><span class="metric-value">{{ post.social_metrics.comments }}</span> Comments</span>
+                    </div>
+
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

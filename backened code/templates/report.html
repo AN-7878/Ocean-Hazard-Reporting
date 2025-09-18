@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Uploaded Reports</title>
+    <style>
+        .report-item {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        .report-item img {
+            max-width: 300px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Uploaded Reports</h1>
+    {% for report in reports %}
+        <div class="report-item">
+            <p><strong>Description:</strong> {{ report['description'] }}</p>
+
+            {% if report['image_path'] %}
+                <img src="{{ url_for('static', filename='uploads/' + report['image_path']) }}" alt="Uploaded Image">
+            {% else %}
+                <p>No image was uploaded.</p>
+            {% endif %}
+
+            {% if report['geotags'] and report['geotags'].get('latitude') %}
+                <p><strong>Latitude:</strong> {{ report['geotags'].latitude }}</p>
+            {% endif %}
+
+            {% if report['geotags'] and report['geotags'].get('longitude') %}
+                <p><strong>Longitude:</strong> {{ report['geotags'].longitude }}</p>
+            {% endif %}
+
+            <p><strong>Extracted Text:</strong></p>
+            <pre>{{ report['extracted_text'] }}</pre>
+
+            {% if report['audio_path'] %}
+                <audio controls>
+                    <source src="{{ url_for('static', filename='uploads/' + report['audio_path']) }}" type="audio/webm">
+                    Your browser does not support the audio element.
+                </audio>
+            {% endif %}
+        </div>
+    {% endfor %}
+</body>
+</html>
